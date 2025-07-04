@@ -155,14 +155,38 @@ footer {
     border: 1px solid rgba(0,0,0,0.1);
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    main {
-        flex-direction: column;
-        padding: 15px;
-    }
-    header, footer {
-        padding-left: 15px;
-        padding-right: 15px;
-    }
+/* ... (previous CSS content) ... */
+
+#open-camera-button,
+#capture-photo-button,
+#close-camera-button {
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin: 10px 5px 0 0;
+    transition: background-color 0.3s ease;
 }
+
+#open-camera-button:hover,
+#capture-photo-button:hover {
+    opacity: 0.9;
+}
+
+#close-camera-button {
+    background-color: #6c757d; /* Grey for close button */
+}
+
+#close-camera-button:hover {
+    background-color: #5a6268;
+}
+
+#camera-feed {
+    display: block; /* Ensure video element is visible when camera is open */
+    margin: 15px auto;
+}
+}
+

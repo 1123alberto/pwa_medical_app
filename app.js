@@ -152,3 +152,120 @@ async function getLlmInsights() {
 }
 
 diagnoseButton.addEventListener('click', getLlmInsights);
+
+
+// ... (previous JavaScript code for PWA registration, theme, language) ...
+
+// --- New: Image Input Elements ---
+const imageInput = document.getElementById('image-input');
+const imagePreviewContainer = document.getElementById('image-preview-container');
+const imagePreview = document.getElementById('image-preview');
+const clearImageButton = document.getElementById('clear-image-button');
+
+let selectedImageBase64 = null; // To store the Base64 representation of the image
+
+// --- New: Event Listener for Image Selection ---
+imageInput.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    if (file) {
+        // Display image preview
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            imagePreview.src = e.target.result;
+            imagePreviewContainer.style.display = 'block';
+            // Convert to Base64 for API
+            selectedImageBase64 = e.target.result.split(',')[1]; // Get Base64 part
+        };
+        reader.readAsDataURL(file);
+    } else {
+        imagePreview.src = '#';
+        imagePreviewContainer.style.display = 'none';
+        selectedImageBase64 = null;
+    }
+});
+
+// --- New: Event Listener for Clear Image Button ---
+clearImageButton.addEventListener('click', () => {
+    imageInput.value = ''; // Clear file input
+    imagePreview.src = '#';
+    imagePreviewContainer.style.display = 'none';
+    selectedImageBase64 = null;
+});
+
+
+// ... (previous JavaScript code for PWA registration, theme, language, image upload) ...
+
+// --- New: Camera Elements ---
+const openCameraButton = document.getElementById('open-camera-button');
+const cameraContainer = document.getElementById('camera-container');
+const cameraFeed = document.getElementById('camera-feed');
+const capturePhotoButton = document.getElementById('capture-photo-button');
+const closeCameraButton = document.getElementById('close-camera-button');
+const cameraCanvas = document.getElementById('camera-canvas');
+const context = cameraCanvas.getContext('2d');
+
+let cameraStream = null; // To hold the camera stream
+
+// Function to stop camera stream
+function stopCamera() {
+    if (cameraStream) {
+        cameraStream.getTracks().forEach(track => track.stop());
+        cameraFeed.srcObject = null;
+        cameraStream = null;
+    }
+    cameraContainer.style.display = 'none';
+}
+
+// Event Listener for Open Camera Button
+openCameraButton.addEventListener('click', async () => {
+    // Clear any previously uploaded image
+    imageInput.value = '';
+    imagePreview.src = '#';
+    imagePreviewContainer.style.display = 'none';
+    selectedImageBase64 = null;
+
+    try {
+        cameraStream = await navigator.mediaDevices.getUserMedia({ video: true });
+        cameraFeed.srcObject = cameraStream;
+        cameraContainer.style.display = 'block';
+    } catch (err) {
+        console.error('Error accessing camera:', err);
+        alert(translations['cameraAccessError'] || 'Could not access camera. Please ensure permissions are granted.');
+        cameraContainer.style.display = 'none';
+    }
+});
+
+// Event Listener for Capture Photo Button
+capturePhotoButton.addEventListener('click', () => {
+    if (cameraStream) {
+        // Set canvas dimensions to match video feed
+        cameraCanvas.width = cameraFeed.videoWidth;
+        cameraCanvas.height = cameraFeed.videoHeight;
+
+        // Draw the current video frame onto the canvas
+        context.drawImage(cameraFeed, 0, 0, cameraCanvas.width, cameraCanvas.height);
+
+        // Get image data from canvas as Base64
+        const imageDataURL = cameraCanvas.toDataURL('image/jpeg', 0.9); // JPEG format, 90% quality
+        selectedImageBase64 = imageDataURL.split(',')[1]; // Extract Base64 part
+
+        // Display captured photo in the image preview section
+        imagePreview.src = imageDataURL;
+        imagePreviewContainer.style.display = 'block';
+        imageInput.value = ''; // Clear file input if a photo was just taken
+
+        // Stop camera after capture
+        stopCamera();
+    }
+});
+
+// Event Listener for Close Camera Button
+closeCameraButton.addEventListener('click', () => {
+    stopCamera();
+});
+
+
+// --- Modified: LLM API Integration (Conceptual using Google Gemini Pro Vision API) ---
+// ... (rest of the LLM integration code remains the same as before) ...
+// The `getLlmInsights` function already checks for `selectedImageBase64`
+// so it will automatically use the photo taken by the camera.

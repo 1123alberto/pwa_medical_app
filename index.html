@@ -27,18 +27,27 @@
 
     <main>
         <section class="input-section">
-            <h2 data-i18n="inputSectionTitle">Enter Symptoms & Observations</h2>
-            <textarea id="symptoms-input" rows="10" placeholder="" data-i18n="symptomsPlaceholder"></textarea>
-            <button id="diagnose-button" data-i18n="diagnoseButton">Get AI Insights</button>
-            <div id="loading-indicator" style="display: none;" data-i18n="loadingMessage">Generating insights...</div>
-        </section>
+        <h2 data-i18n="inputSectionTitle">Enter Symptoms & Observations</h2>
+        <textarea id="symptoms-input" rows="10" placeholder="" data-i18n="symptomsPlaceholder"></textarea>
 
-        <section class="output-section">
-            <h2 data-i18n="outputSectionTitle">AI Insights</h2>
-            <div id="diagnosis-output">
-                <p data-i18n="initialOutputMessage">Insights will appear here after you submit your symptoms.</p>
-            </div>
-        </section>
+        <h2 data-i18n="imageInputTitle">Upload Patient Photo (Visible Symptoms)</h2>
+        <input type="file" id="image-input" accept="image/png, image/jpeg, image/webp" data-i18n="imageInputLabel">
+        <div id="image-preview-container" style="display: none;">
+            <img id="image-preview" src="#" alt="Image Preview" style="max-width: 100%; height: auto; margin-top: 10px; border: 1px solid var(--border-color); border-radius: 5px;">
+            <button id="clear-image-button" class="clear-button" data-i18n="clearImageButton">Clear Image</button>
+        </div>
+
+        <h2 data-i18n="cameraInputTitle">Or Take a Photo</h2>
+        <button id="open-camera-button" data-i18n="openCameraButton">Open Camera</button>
+
+        <div id="camera-container" style="display: none; text-align: center; margin-top: 15px;">
+            <video id="camera-feed" autoplay playsinline style="width: 100%; max-width: 400px; border: 1px solid var(--border-color); border-radius: 5px;"></video>
+            <button id="capture-photo-button" data-i18n="capturePhotoButton">Capture Photo</button>
+            <button id="close-camera-button" class="clear-button" data-i18n="closeCameraButton">Close Camera</button>
+            <canvas id="camera-canvas" style="display: none;"></canvas> </div>
+        <button id="diagnose-button" data-i18n="diagnoseButton">Get AI Insights</button>
+        <div id="loading-indicator" style="display: none;" data-i18n="loadingMessage">Generating insights...</div>
+    </section>
     </main>
 
     <footer>

@@ -14,4 +14,10 @@
 "noSymptomsWarning":	"Please enter some symptoms or observations.",
 "apiError":	"Error getting insights:",
 "apiKeyWarning":	"Please check your API key and network connection. Remember this is for personal use."
+
+ "cameraInputTitle": "Or Take a Photo",
+    "openCameraButton": "Open Camera",
+    "capturePhotoButton": "Capture Photo",
+    "closeCameraButton": "Close Camera",
+    "cameraAccessError": "Could not access camera. Please ensure permissions are granted."
 }

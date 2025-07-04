@@ -14,4 +14,9 @@
     "noSymptomsWarning": "Veuillez entrer des symptômes ou des observations.",
     "apiError": "Erreur lors de l'obtention des informations :",
     "apiKeyWarning": "Veuillez vérifier votre clé API et votre connexion réseau. N'oubliez pas que c'est pour un usage personnel."
+
+ "imageInputTitle": "Télécharger la Photo du Patient (Symptômes Visibles)",
+    "imageInputLabel": "Choisissez un fichier image (PNG, JPEG, WEBP)",
+    "clearImageButton": "Effacer l'Image",
+    "noInputWarning": "Veuillez saisir des symptômes/observations ou télécharger une photo."
 }
